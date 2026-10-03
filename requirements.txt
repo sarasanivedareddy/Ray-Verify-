@@ -1,0 +1,5 @@
+Requirements: 
+        numpy
+        pandas
+        matplotlib
+        Pillow
