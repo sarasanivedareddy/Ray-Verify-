@@ -1,0 +1,3 @@
+RAY VERIFY
+The data used in the playground.ipynb is personal data. I have retrieved this data from a private hospital in India. The management is related to my family. Hence, no license or restrictions are imposed on the data. 
+However, the data which I will be adding later on for synthetic AI generated prediction, might be extracted from Kaggle. I will mention the restrictictions and licenses then. 
