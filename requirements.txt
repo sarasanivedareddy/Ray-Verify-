@@ -3,3 +3,6 @@ Requirements:
         pandas
         matplotlib
         Pillow
+        Pytorch
+        Torchvision
+        gradio
