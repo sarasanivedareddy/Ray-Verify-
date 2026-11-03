@@ -1,8 +1,39 @@
-Requirements: 
-        numpy
-        pandas
-        matplotlib
-        Pillow
-        Pytorch
-        Torchvision
-        gradio
+
+# Recommended: Python 3.10 or 3.11
+#
+# Install PyTorch and Torchvision using the official selector for your OS
+# and CPU/CUDA setup if you need GPU acceleration:
+# https://pytorch.org/get-started/locally/
+#
+# Then install the remaining project dependencies with:
+#   python -m pip install -r requirements.txt
+
+numpy>=1.26,<2.0
+pandas>=2.0
+Pillow>=10.0
+scikit-learn>=1.3
+matplotlib>=3.7
+
+# Deep learning
+torch>=2.2
+torchvision>=0.17
+
+# Notebook serialization / utilities
+dill>=0.3.8
+
+# HCI / demo interface
+gradio>=5,<6
+
+# Explainability
+lime>=0.2.0.1
+scikit-image>=0.22
+
+# Fairness experiment
+aif360>=0.6.1
+
+# Adversarial robustness experiment
+torchattacks>=3.5.1
+
+# Notebook support
+ipykernel>=6.25
+jupyterlab>=4.0
