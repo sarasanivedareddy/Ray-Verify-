@@ -54,8 +54,8 @@ The earlier proposed mixed/AI-edited class and secondary image attributes are ou
 ## Datasets and provenance
 The experiments use two Kaggle sources:
 Collection	Source	Original downloaded count reported
-Patient-acquired	xhlulu – VinBigData Chest X-ray Resized PNG 256×256	6,320
-Synthetic	synthetic_chestXrays Kaggle notebook/input	6,326
+Patient-acquired	[xhlulu – VinBigData Chest X-ray Resized PNG 256×256	6,320](https://www.kaggle.com/datasets/xhlulu/vinbigdata-chest-xray-resized-png-256x256)
+Synthetic	[synthetic_chestXrays Kaggle notebook/input	6,326](https://www.kaggle.com/code/farihabintasadeque/synthetic-chestxrays/input?select=train)
 Total		12,646
 
 
@@ -115,19 +115,7 @@ DenseNet-121
 DenseNet-121 is the comparison architecture. It uses pretrained ImageNet weights and a replacement classifier for the two origin classes. Five fold-specific models are trained and their output scores are averaged for ensemble inference.
 
 ## Training configuration recorded in the project
-Setting	Value
-Task	Binary image classification
-Classes	Patient-acquired / Synthetic
-Input tensor	3 × 224 × 224
-Batch size	16
-Epochs	10 per fold
-Cross-validation	5-fold stratified
-Optimizer	Adam
-Learning rate	0.001
-Development/test split	80:20, stratified
-Random seed	42 for the recorded split and ResNet CV configuration
-Withholding threshold	0.80
-Runtime device	CUDA when available, otherwise CPU
+<img width="1312" height="1199" alt="image" src="https://github.com/user-attachments/assets/30ba866b-b458-4b27-9042-bae2db07492a" />
 
 
 The notebook saves fold-specific model checkpoints and experiment outputs under the configured runs/ directory. Use the matching run directory and test manifest for evaluation; do not create a new test split when reproducing a saved experiment.
@@ -146,16 +134,8 @@ The 0.80 threshold is applied to the maximum ensemble class score. If the maximu
 
 ## Reported results
 The following are the final comparison values recorded in the project report/notebook experiment summary:
-Metric	ResNet-18 ensemble	DenseNet-121 ensemble
-Synthetic precision	99.01%	99.51%
-Synthetic recall	95.78%	96.50%
-Synthetic F1-score	97.37%	97.98%
-Patient-acquired precision	99.42%	99.52%
-Patient-acquired recall	94.15%	97.86%
-Patient-acquired F1-score	96.71%	98.68%
-Coverage	95.72%	97.66%
-Error among classified	0.79%	0.49%
-Uncertain images	108	59
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ddb4f07d-2145-44fa-affb-353edf31adcf" />
+
 
 
 DenseNet-121 performed better across the reported metrics, with higher coverage and fewer withheld predictions. It was selected for the current prototype. This is a comparison on the available dataset and test split; it does not demonstrate generalization to other hospitals, acquisition devices, patient populations, or unseen synthetic generators.
@@ -228,12 +208,12 @@ Do not use Ray Verify for diagnosis, treatment decisions, patient triage, clinic
 - Perform a curator-focused usability evaluation of the Gradio workflow.
 
 ## Acknowledgments and references
-- xhlulu, VinBigData Chest X-ray Resized PNG 256×256.
-- VinBigData Chest X-ray Abnormalities Detection competition.
-- Fariha Binta Sadeque, synthetic_chestXrays Kaggle notebook/input.
-- PyTorch documentation.
-- Torchvision documentation.
-- Gradio documentation.
-- LIME documentation.
-- AI Fairness 360 documentation.
-- Torchattacks documentation.
+- xhlulu, VinBigData Chest X-ray Resized PNG 256×256- https://www.kaggle.com/datasets/xhlulu/vinbigdata-chest-xray-resized-png-256x256
+- VinBigData Chest X-ray Abnormalities Detection competition- https://www.kaggle.com/competitions/vinbigdata-chest-xray-abnormalities-detection
+- Fariha Binta Sadeque, synthetic_chestXrays Kaggle notebook/input- https://www.kaggle.com/code/farihabintasadeque/synthetic-chestxrays/input?select=train
+- PyTorch documentation- https://pytorch.org/docs/stable/index.html
+- Torchvision documentation- [https://pytorch.org/vision/stable/index.html]
+- Gradio documentation- https://www.gradio.app/docs
+- LIME documentation- https://lime-ml.readthedocs.io/
+- AI Fairness 360 documentation- https://aif360.readthedocs.io/
+- Torchattacks documentation- https://adversarial-attacks-pytorch.readthedocs.io/
