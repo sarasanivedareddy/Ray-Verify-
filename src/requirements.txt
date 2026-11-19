@@ -37,3 +37,6 @@ torchattacks>=3.5.1
 # Notebook support
 ipykernel>=6.25
 jupyterlab>=4.0
+
+# Monitoring
+prometheus-client>=0.20.0

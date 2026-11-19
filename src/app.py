@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import time
 
 import gradio as gr
 import torch
@@ -7,7 +8,23 @@ import torch.nn as nn
 from PIL import Image, UnidentifiedImageError
 from torchvision import transforms
 from torchvision.models import DenseNet121_Weights, densenet121
+from prometheus_client import Counter, Histogram, Gauge, start_http_server
+# Prometheus metrics
+PREDICTIONS = Counter(
+    "ray_verify_predictions_total",
+    "Total number of successful predictions",
+    ["prediction"]
+)
 
+PREDICTION_DURATION = Histogram(
+    "ray_verify_prediction_duration_seconds",
+    "Time taken to process a prediction"
+)
+
+PREDICTION_CONFIDENCE = Gauge(
+    "ray_verify_prediction_confidence",
+    "Maximum average ensemble score for the latest prediction"
+)
 
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/app/saved_models"))
 ENSEMBLE_PATH = MODEL_DIR / "densenet121_ensemble.pkl"
@@ -83,7 +100,7 @@ def analyze_densenet(image):
             None,
             ""
         )
-
+    start_time = time.perf_counter()
     try:
         if not isinstance(image, Image.Image):
             image = Image.fromarray(image)
@@ -132,6 +149,11 @@ def analyze_densenet(image):
             "that the prediction is correct."  )
 
         record = {"prediction": prediction}
+
+        # Update Prometheus metrics
+        PREDICTIONS.labels(prediction=prediction).inc()
+        PREDICTION_DURATION.observe(time.perf_counter() - start_time)
+        PREDICTION_CONFIDENCE.set(maximum_score)
 
         return result_markdown, scores_text, record, ""
 
@@ -298,8 +320,16 @@ with gr.Blocks(
 
 
 if __name__ == "__main__":
+
+    start_http_server(
+        int(os.environ.get("METRICS_PORT", "8000"))
+    )
+
+    print("Prometheus metrics available on port 8000", flush=True)
+
     demo.queue().launch(
         server_name="0.0.0.0",
         server_port=int(os.environ.get("PORT", "7860")),
         share=False,
-        max_file_size="10mb" )
+        max_file_size="10mb"
+    )
